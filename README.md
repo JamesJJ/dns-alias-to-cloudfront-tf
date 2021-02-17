@@ -29,7 +29,7 @@ module "dns-alias-to-cloudfront" {
 
 ---
 
-If you need to determine the Route53 `zone_id` automatically, you can set `zone_id = data.aws_route53_zone.my_r53_zone.zone_id` with this additional config:
+If you need to determine the Route53 `zone_id` automatically, you can add this additional config:
 
 ```
 data "aws_route53_zone" "my_r53_zone" {
@@ -37,3 +37,10 @@ data "aws_route53_zone" "my_r53_zone" {
   private_zone = false
 }
 ```
+
+... and set `zone_id` in the above module definition like this:
+
+```
+zone_id = data.aws_route53_zone.my_r53_zone.zone_id
+```
+
