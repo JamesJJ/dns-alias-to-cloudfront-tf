@@ -22,7 +22,7 @@ www.example.com AAAA ->  Cloudfront with ID ABC12345
 
 ```
 module "dns-alias-to-cloudfront" {
-  source                     = "git::https://github.com/brightbock/dns-alias-to-cloudfront-tf.git?ref=main"
+  source                     = "git::https://github.com/brightbock/dns-alias-to-cloudfront-tf.git?ref=v0.3.0"
   zone_name                  = "example.com"
   cloudfront_distribution_id = "ABC12345"
   # domain_prefixes = [ "", "www" ]
