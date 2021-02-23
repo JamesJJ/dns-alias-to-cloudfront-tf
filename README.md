@@ -15,32 +15,17 @@ www.example.com AAAA ->  Cloudfront with ID ABC12345
 ## How to use:
 
 1. Add the definition below to your Terraform.
-2. Set `zone_name`, `zone_id` to match your Route53 zone.
+2. Set `zone_name` to match your Route53 zone.
 3. Set `cloudfront_distribution_id` to the ID of your Cloudfront distribution.
+4. (Optional) To set other FQDNs rather than the domain root & www, uncomment and update `domain_prefixes`
+
 
 ```
 module "dns-alias-to-cloudfront" {
   source                     = "git::https://github.com/brightbock/dns-alias-to-cloudfront-tf.git?ref=main"
   zone_name                  = "example.com"
-  zone_id                    = "XYZ009988"
   cloudfront_distribution_id = "ABC12345"
+  # domain_prefixes = [ "", "www" ]
 }
-```
-
----
-
-If you need to determine the Route53 `zone_id` automatically, you can add this additional config:
-
-```
-data "aws_route53_zone" "my_r53_zone" {
-  name         = "example.com."
-  private_zone = false
-}
-```
-
-... and set `zone_id` in the above module definition like this:
-
-```
-zone_id = data.aws_route53_zone.my_r53_zone.zone_id
 ```
 

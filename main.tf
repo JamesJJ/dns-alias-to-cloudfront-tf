@@ -1,11 +1,9 @@
-data "aws_cloudfront_distribution" "cloudfront_distribution" {
-  id = var.cloudfront_distribution_id
-}
 
-resource "aws_route53_record" "root-a" {
+resource "aws_route53_record" "a" {
+  for_each        = toset(var.domain_prefixes)
   allow_overwrite = true
-  zone_id         = var.zone_id
-  name            = var.zone_name
+  zone_id         = data.aws_route53_zone.route53_zone.zone_id
+  name            = join(each.key != "" ? "." : "", [each.key, data.aws_route53_zone.route53_zone.name])
   type            = "A"
 
   alias {
@@ -15,36 +13,11 @@ resource "aws_route53_record" "root-a" {
   }
 }
 
-resource "aws_route53_record" "root-aaaa" {
+resource "aws_route53_record" "aaaa" {
+  for_each        = toset(var.domain_prefixes)
   allow_overwrite = true
-  zone_id         = var.zone_id
-  name            = var.zone_name
-  type            = "AAAA"
-
-  alias {
-    name                   = data.aws_cloudfront_distribution.cloudfront_distribution.domain_name
-    zone_id                = data.aws_cloudfront_distribution.cloudfront_distribution.hosted_zone_id
-    evaluate_target_health = false
-  }
-}
-
-resource "aws_route53_record" "www-a" {
-  allow_overwrite = true
-  zone_id         = var.zone_id
-  name            = "www.${var.zone_name}"
-  type            = "A"
-
-  alias {
-    name                   = data.aws_cloudfront_distribution.cloudfront_distribution.domain_name
-    zone_id                = data.aws_cloudfront_distribution.cloudfront_distribution.hosted_zone_id
-    evaluate_target_health = false
-  }
-}
-
-resource "aws_route53_record" "www-aaaa" {
-  allow_overwrite = true
-  zone_id         = var.zone_id
-  name            = "www.${var.zone_name}"
+  zone_id         = data.aws_route53_zone.route53_zone.zone_id
+  name            = join(each.key != "" ? "." : "", [each.key, data.aws_route53_zone.route53_zone.name])
   type            = "AAAA"
 
   alias {
