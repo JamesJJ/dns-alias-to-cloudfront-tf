@@ -1,3 +1,5 @@
+![GitHub](https://img.shields.io/github/license/brightbock/dns-alias-to-cloudfront-tf) ![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/brightbock/dns-alias-to-cloudfront-tf) ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/brightbock/dns-alias-to-cloudfront-tf/Terraform)
+
 # Route53 DNS to Cloudfront CDN
 
 This is a simple Terraform module that add DNS aliases in Route53 for the root of a domain and `www.` to point to a specified Cloudfront distribution. For example:
